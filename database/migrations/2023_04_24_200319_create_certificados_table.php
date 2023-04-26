@@ -17,6 +17,8 @@ return new class extends Migration
             $table->id();
 
             $table->tinyInteger('estado')->nullable()->default(1);//null inactivo, 1 activo
+            $table->date('emision')->nullable();
+            $table->decimal('nota', 5, 2)->nullable();
 
             $table->unsignedBigInteger('estudiante_id');
             $table->foreign('estudiante_id')->references('id')->on('estudiantes');

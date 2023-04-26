@@ -20,7 +20,7 @@
                             <button wire:click="$set('buscar','')" class="btn btn-secondary btn-flat" title="Limpiar filtros"><i class="fa-solid fa-eraser"></i></button>
                         @endif
                         <button type="button" wire:click='render()' class="btn btn-info btn-flat" title="Buscar"><i class="fa-solid fa-magnifying-glass"></i></button>
-                            <button type="button" wire:click='create()' class="btn btn-primary btn-flat" title="Nuevo user"><i class="fa-solid fa-plus"></i></button>
+                            <button type="button" wire:click='create()' class="btn btn-primary btn-flat" title="Nuevo usuario"><i class="fa-solid fa-plus"></i></button>
                     </div>
                 </div>
                 @if ($users->count())
@@ -43,7 +43,7 @@
                                         <td>{{ $user->name }}</td>
                                         <td>{{ $user->email }}</td>
                                         <td>{!! $user->rol==1?'<span class="text-primary">Admin</span>':'<span class="text-success">Común</span>' !!}</td>
-                                        <td>{!! $user->estado==1?'<span class="badge badge-pill badge-success">Activo</span>':'<span class="badge badge-pill badge-danger">Inactivo</span>' !!}</td>
+                                        <td>{!! $user->estado==1?'<span class="badge badge-pill badge-success">Activo</span>':'<span class="badge badge-pill badge-secondary">Inactivo</span>' !!}</td>
                                         <td>
                                             <div class="btn-group">
                                                 <button type="button" wire:click='edit({{$user->id}})' class="btn btn-outline-info btn-xs" title="Editar"><i class="fa-solid fa-pencil"></i></button>

@@ -17,6 +17,8 @@ return new class extends Migration
             $table->id();
 
             $table->string('nombre');
+            $table->string('tipo', 30)->nullable();
+            $table->decimal('horas',6 ,2)->nullable();
             $table->date('desde');
             $table->date('hasta');
             $table->tinyInteger('estado')->nullable()->default(1);//null inactivo, 1 activo

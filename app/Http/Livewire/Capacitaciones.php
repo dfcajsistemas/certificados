@@ -8,6 +8,7 @@ class Capacitaciones extends Component
 {
     public function render()
     {
-        return view('livewire.capacitaciones');
+        return view('livewire.capacitaciones')
+            ->layoutData(['page'=>'Capacitaciones']);
     }
 }
