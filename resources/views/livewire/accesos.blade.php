@@ -42,12 +42,13 @@
                                         <td>{{ ($users->currentPage()-1)*$users->perPage() + $loop->index+1 }}</td>
                                         <td>{{ $user->name }}</td>
                                         <td>{{ $user->email }}</td>
-                                        <td>{{ $user->rol==1?'Admin':'Común' }}</td>
-                                        <td>{!! $user->estado==1?'<span class="badge badge-pill badge-success">Success</span>':'<span class="badge badge-pill badge-danger">Danger</span>' !!}</td>
+                                        <td>{!! $user->rol==1?'<span class="text-primary">Admin</span>':'<span class="text-success">Común</span>' !!}</td>
+                                        <td>{!! $user->estado==1?'<span class="badge badge-pill badge-success">Activo</span>':'<span class="badge badge-pill badge-danger">Inactivo</span>' !!}</td>
                                         <td>
                                             <div class="btn-group">
                                                 <button type="button" wire:click='edit({{$user->id}})' class="btn btn-outline-info btn-xs" title="Editar"><i class="fa-solid fa-pencil"></i></button>
                                                 <button type="button" onclick="confirmar('{{$user->name}}', {{$user->id}})" class="btn btn-outline-secondary btn-xs" title="Cambiar estado"><i class="fa-solid fa-toggle-off"></i></button>
+                                                <button type="button" onclick="cpassword('{{$user->name}}', {{$user->id}})" class="btn btn-outline-primary btn-xs" title="Cambiar contraseña"><i class="fa-solid fa-key"></i></button>
 
                                             </div>
                                         </td>
@@ -102,21 +103,24 @@
                 });
                 window.livewire.on('add', m=>{
                     $('#modalRes').modal('hide');
-                    noti(m);
+                    nuser(m);
                 });
-                window.livewire.on('update', m=>{
+                window.livewire.on('edit', m=>{
                     $('#modalRes').modal('hide');
                     noti(m);
                 });
-                window.livewire.on('deleted', m=>{
+                window.livewire.on('status', m=>{
                     noti(m);
+                });
+                window.livewire.on('pass', m=>{
+                    rpassword(m);
                 });
             });
 
             function confirmar(m, id){
                 Swal.fire({
                     title: 'Confirmar',
-                    html: '¿Seguro que deseas cambiar el estado?<br><b>'+m+'</b>',
+                    html: 'Cambiarás el estado de:<br><b>'+m+'</b>',
                     icon: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
@@ -129,6 +133,38 @@
                         Swal.close();
                     }
                 })
+            }
+
+            function cpassword(m, id){
+                Swal.fire({
+                    title: 'Contraseña',
+                    html: 'Cambiarás la contraseña de:<br><b>'+m+'</b>',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Si, cambiar',
+                    cancelButtonText: 'No'
+                }).then((result)=>{
+                    if(result.isConfirmed){
+                        window.livewire.emit('password', id);
+                        Swal.close();
+                    }
+                })
+            }
+            function nuser(r){
+                Swal.fire(
+                    '¡Usuario creado!',
+                    r,
+                    'success'
+                )
+            }
+            function rpassword(r){
+                Swal.fire(
+                    '¡Contraseña cambiada!',
+                    r,
+                    'success'
+                )
             }
         </script>
     @endpush

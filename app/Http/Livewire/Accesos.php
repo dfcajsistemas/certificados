@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Illuminate\Support\Str;
@@ -16,11 +17,11 @@ class Accesos extends Component
 
     protected $queryString=[
         'buscar'=>['except'=>''],
-        'porPagina'=>['except'=>10]
+        'porPagina'=>['except'=>'10']
     ];
 
     protected $paginationTheme='bootstrap';
-    protected $listeners=['estado'];
+    protected $listeners=['estado', 'password'];
 
     public function updatingBuscar(){
         $this->resetPage();
@@ -32,9 +33,9 @@ class Accesos extends Component
 
     public function render()
     {
-        $users=User::where('name', 'like', '%'.$this->buscar.'%')->paginate($this->porPagina);
+        $users=User::where('name', 'like', '%'.$this->buscar.'%')->orderBy('name')->paginate($this->porPagina);
         return view('livewire.accesos', compact('users'))
-            ->layoutData(['page'=>'Accesos']);;
+            ->layoutData(['page'=>'Accesos']);
     }
 
     public function create(){
@@ -46,7 +47,6 @@ class Accesos extends Component
     }
 
     public function store(){
-        //dd($this->rol);
         $rules=[
             'name'=>'required|min:3',
             'email'=>'required|unique:users,email|email',
@@ -65,15 +65,85 @@ class Accesos extends Component
         $user=User::create([
             'name'=>$this->name,
             'email'=>$this->email,
-            'rol'=>($this->rol==1?1:null),
-            'password'=>bcrypt($password)
+            'rol'=>($this->rol == 1 ? 1 : null),
+            'password'=>bcrypt($password),
+            'created_by'=>Auth::user()->id,
+            'updated_by'=>Auth::user()->id,
         ]);
 
-        $this->emit('add', "Usuario $user->name creado con contraseña <b>$password<b>");
+        $this->emit('add', "Correo: <b>$user->email</b><br>Contraseña: <b>$password<b>");
+    }
+
+    public function edit(User $user){
+        $this->mtitulo='Editar usuario';
+        $this->metodo='update';
+
+        $this->resetCom();
+
+        $this->idm=$user->id;
+        $this->name=$user->name;
+        $this->email=$user->email;
+        $this->rol=$user->rol;
+
+        $this->emit('sm', 'Mostrar modal');
+    }
+
+    public function update(){
+        $rules=[
+            'name'=>'required|min:3',
+            'email'=>"required|email|unique:users,email,{$this->idm}",
+        ];
+        $messages=[
+            'name.required'=>'Ingrese un nombre',
+            'name.min'=>'Mínimo 3 caracteres',
+            'email.required'=>'Ingrese un correo',
+            'email.unique'=>'El correo ya existe',
+            'email.email'=>'Ingrese un correo válido'
+
+        ];
+        $this->validate($rules, $messages);
+
+        $user=User::findOrFail($this->idm);
+
+        $user->name=$this->name;
+        $user->email=$this->email;
+        $user->rol=$this->rol==1 ? 1 : null;
+        $user->updated_by=Auth::user()->id;
+
+        $user->save();
+
+        $this->emit('edit', 'Se actualizó el usuario');
+    }
+
+    public function estado(User $user){
+        $est='activo';
+        if($user->estado){
+            $user->estado=null;
+            $est='desacivo';
+        }else{
+            $user->estado=1;
+        }
+
+        $user->updated_by=Auth::user()->id;
+        $user->save();
+
+        $this->emit('status', "Se <b>$est</b> al usuario");
+    }
+
+    public function password(User $user){
+
+        $pas=Str::random(8);
+
+        $user->password=bcrypt($pas);
+
+        $user->updated_by=Auth::user()->id;
+        $user->save();
+
+        $this->emit('pass', "Correo: <b>$user->email</b><br>Contraseña: <b>$pas</b>");
     }
 
     public function resetCom(){
-        $this->reset(['name', 'email', 'buscar', 'idm', 'porPagina']);
+        $this->reset(['name', 'email', 'rol', 'buscar', 'idm', 'porPagina']);
         $this->resetValidation();
     }
 }
