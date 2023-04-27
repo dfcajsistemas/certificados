@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'Laravel') }} | {{$page}}</title>
+        <title>{{ config('app.name', 'Laravel') }} | {{ $page }}</title>
 
         <!-- Font Awesome Icons -->
         <link rel="stylesheet" href="{{asset("plugins/fontawesome-free/css/all.min.css")}}">

@@ -116,10 +116,10 @@ class Accesos extends Component
     }
 
     public function estado(User $user){
-        $est='activo';
+        $est='activó';
         if($user->estado){
             $user->estado=null;
-            $est='desacivo';
+            $est='desacivó';
         }else{
             $user->estado=1;
         }

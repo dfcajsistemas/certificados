@@ -8,4 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class Capacitacion extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'nombre',
+        'tipo',
+        'horas',
+        'desde',
+        'hasta'
+    ];
+
 }

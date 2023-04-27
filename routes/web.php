@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CertificadoController;
 use App\Http\Livewire\Accesos;
 use App\Http\Livewire\Admin;
 use App\Http\Livewire\Capacitaciones;
@@ -35,5 +36,7 @@ Route::middleware([
     Route::get('/accesos', Accesos::class)->name('accesos');
     Route::get('/estudiantes', Estudiantes::class)->name('estudiantes');
     Route::get('/capacitaciones', Capacitaciones::class)->name('capacitaciones');
+    Route::get('/capacitaciones/{capacitacion}', [CertificadoController::class, 'certificados'])->name('capacitaciones.certificados');
     Route::get('/consultas', Consultas::class)->name('consultas');
+
 });

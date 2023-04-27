@@ -49,7 +49,7 @@
                                         <td>
                                             <div class="btn-group">
                                                 <button type="button" wire:click='edit({{$estudiante->id}})' class="btn btn-outline-info btn-xs" title="Editar"><i class="fa-solid fa-pencil"></i></button>
-                                                <button type="button" onclick="confirmar('{{$estudiante->name}}', {{$estudiante->id}})" class="btn btn-outline-secondary btn-xs" title="Cambiar estado"><i class="fa-solid fa-toggle-off"></i></button>
+                                                <button type="button" onclick="confirmar('{{$estudiante->nombre}}', {{$estudiante->id}})" class="btn btn-outline-secondary btn-xs" title="Cambiar estado"><i class="fa-solid fa-toggle-off"></i></button>
                                             </div>
                                         </td>
                                     </tr>
@@ -124,9 +124,6 @@
                 window.livewire.on('status', m=>{
                     noti(m);
                 });
-                window.livewire.on('pass', m=>{
-                    rpassword(m);
-                });
             });
 
             function confirmar(m, id){
@@ -145,38 +142,6 @@
                         Swal.close();
                     }
                 })
-            }
-
-            function cpassword(m, id){
-                Swal.fire({
-                    title: 'Contraseña',
-                    html: 'Cambiarás la contraseña de:<br><b>'+m+'</b>',
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Si, cambiar',
-                    cancelButtonText: 'No'
-                }).then((result)=>{
-                    if(result.isConfirmed){
-                        window.livewire.emit('password', id);
-                        Swal.close();
-                    }
-                })
-            }
-            function nestudiante(r){
-                Swal.fire(
-                    '¡Usuario creado!',
-                    r,
-                    'success'
-                )
-            }
-            function rpassword(r){
-                Swal.fire(
-                    '¡Contraseña cambiada!',
-                    r,
-                    'success'
-                )
             }
         </script>
     @endpush
