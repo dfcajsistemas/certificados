@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'Laravel') }} | {{ $page }}</title>
+        <title>{{ config('app.name', 'Laravel') }} | {{$page}}</title>
 
         <!-- Font Awesome Icons -->
         <link rel="stylesheet" href="{{asset("plugins/fontawesome-free/css/all.min.css")}}">
@@ -119,7 +119,7 @@
                         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                             data-accordion="false">
                             <li class="nav-item">
-                                <a href="{{ route('capacitaciones') }}" class="nav-link {{request()->routeIs('capacitaciones') ? "active" : ""}}">
+                                <a href="{{ route('capacitaciones') }}" class="nav-link {{request()->routeIs('capacitaciones.*') ? "active" : ""}}">
                                   <i class="nav-icon fa-solid fa-chalkboard-user"></i>
                                   <p>
                                     Capacitaciones

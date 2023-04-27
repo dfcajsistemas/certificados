@@ -19,8 +19,8 @@ return new class extends Migration
             $table->string('nombre');
             $table->string('tipo', 30)->nullable();
             $table->decimal('horas',6 ,2)->nullable();
-            $table->date('desde');
-            $table->date('hasta');
+            $table->date('desde')->nullable();
+            $table->date('hasta')->nullable();
             $table->tinyInteger('estado')->nullable()->default(1);//null inactivo, 1 activo
 
             $table->unsignedBigInteger('created_by')->nullable()->index();
