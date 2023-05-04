@@ -15,17 +15,27 @@
                 </div>
                 <div class="card-body">
                     <form action="{{route('capacitaciones.certificados.store', $capacitacion->id)}}" method="POST">
+                        @csrf
                         <div class="row">
                             <div class="col-6">
                                 <select name="estudiante_id" id="estudiante" style="width: 100%">
 
                                 </select>
+                                @error('estudiante_id')
+                                    <span class="text-xs text-danger">{{$message}}</span>
+                                @enderror
                             </div>
                             <div class="col-3">
-                                <input type="date" name="emision" class="form-control" placeholder="F. emisión" value="{{date('Y-m-d')}}">
+                                <input type="date" name="emision" class="form-control" placeholder="F. emisión" value="{{date('Y-m-d')}}" value="{{old('emision')}}">
+                                @error('emision')
+                                    <span class="text-xs text-danger">{{$message}}</span>
+                                @enderror
                             </div>
                             <div class="col-2">
-                                <input type="number" name="nota" class="form-control" placeholder="Nota" step="0.01">
+                                <input type="number" name="nota" class="form-control" placeholder="Nota" step="0.01" value="{{old('nota')}}">
+                                @error('nota')
+                                    <span class="text-xs text-danger">{{$message}}</span>
+                                @enderror
                             </div>
                             <div class="col-1">
                                 <button class="btn btn-primary" type="submit"><i class="fa-solid fa-user-plus"></i></button>
