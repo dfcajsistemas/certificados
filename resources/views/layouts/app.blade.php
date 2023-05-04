@@ -172,7 +172,7 @@
         <!-- REQUIRED SCRIPTS -->
 
         <!-- jQuery -->
-        <script src="{{asset("plugins/jquery/jquery.min.js")}}"></script>
+        <script src="{{asset("plugins/jquery/jquery-a.min.js")}}"></script>
         <!-- Bootstrap 4 -->
         <script src="{{asset("plugins/bootstrap/js/bootstrap.bundle.min.js")}}"></script>
         <!-- SweetAlert2 -->

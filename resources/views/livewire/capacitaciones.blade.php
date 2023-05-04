@@ -52,7 +52,7 @@
                                             <div class="btn-group">
                                                 <button type="button" wire:click='edit({{$capacitacion->id}})' class="btn btn-outline-info btn-xs" title="Editar"><i class="fa-solid fa-pencil"></i></button>
                                                 <button type="button" onclick="confirmar('{{$capacitacion->nombre}}', {{$capacitacion->id}})" class="btn btn-outline-secondary btn-xs" title="Cambiar estado"><i class="fa-solid fa-toggle-off"></i></button>
-                                                <a href="{{route('capacitaciones.certificados', $capacitacion->id)}}" class="btn btn-outline-primary btn-xs" title="Certificadosphp artisan "><i class="fa-solid fa-certificate"></i></a>
+                                                <a href="{{route('capacitaciones.certificados', $capacitacion->id)}}" class="btn btn-outline-primary btn-xs" title="Certificados"><i class="fa-solid fa-certificate"></i></a>
                                             </div>
                                         </td>
                                     </tr>
