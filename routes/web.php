@@ -39,6 +39,6 @@ Route::middleware([
     Route::get('/capacitaciones', Capacitaciones::class)->name('capacitaciones');
     Route::get('/capacitaciones/{capacitacion}', [CertificadoController::class, 'certificados'])->name('capacitaciones.certificados');
     Route::get('/capacitaciones/certificados/bsestudiante', [CertificadoController::class, 'bsestudiante'])->name('capacitaciones.certificados.bsestudiante');
-    Route::post('/capacitaciones/certificados/{capacitacion}', [CertificadoController::class, 'store'])->name('capacitaciones.certificados.store');
+    Route::post('/capacitaciones/certificados/store', [CertificadoController::class, 'store'])->name('capacitaciones.certificados.store');
     Route::get('/consultas', Consultas::class)->name('consultas');
 });

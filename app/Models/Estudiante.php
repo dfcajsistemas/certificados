@@ -15,4 +15,8 @@ class Estudiante extends Model
         'correo',
         'telefono'
     ];
+
+    public function certificados(){
+        return $this->hasMany(Certificado::class);
+    }
 }

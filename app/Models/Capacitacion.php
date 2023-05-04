@@ -17,4 +17,8 @@ class Capacitacion extends Model
         'hasta'
     ];
 
+    public function certificados(){
+        return $this->hasMany(Certificado::class);
+    }
+
 }

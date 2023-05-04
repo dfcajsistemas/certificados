@@ -17,4 +17,12 @@ class Certificado extends Model
         'created_by',
         'updated_by'
     ];
+
+    public function capacitacion(){
+        return $this->belongsTo(Capacitacion::class);
+    }
+
+    public function estudiante(){
+        return $this->belongsTo(Estudiante::class);
+    }
 }
