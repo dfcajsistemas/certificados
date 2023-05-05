@@ -44,7 +44,7 @@
                 @if (Route::has('login'))
                 <div class="my-4">
                     @auth
-                        <a href="{{ url('/inicio') }}" class="btn btn-outline-success"><i class="fa-solid fa-person-walking"></i> Ir a votar</a>
+                        <a href="{{ url('/dashboard') }}" class="btn btn-outline-success"><i class="fa-solid fa-person-walking"></i> Ir a la administración</a>
                     @else
                         <a href="{{ route('login') }}" class="btn btn-outline-primary"><i class="fa-solid fa-right-to-bracket"></i> Iniciar sesión</a>
 

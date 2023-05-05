@@ -11,7 +11,7 @@
                     <h6 class="text-gray"><small>Fecha:</small> {{$capacitacion->desde}} @if ($capacitacion->hasta) al {{$capacitacion->hasta}} @endif</h6>
                     <h6 class="text-gray"><small>Estado:</small> {!! $capacitacion->estado==1?'<span class="badge badge-pill badge-success">Activo</span>':'<span class="badge badge-pill badge-secondary">Inactivo</span>' !!}</h6>
                 </div>
-                {!! QrCode::generate('Make me into a QrCode!'); !!}
+                {!! QrCode::format('png')->generate('Make me into a QrCode!'); !!}
             </div>
             <div class="card card-outline card-navy">
                 <div class="card-body">
