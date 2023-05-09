@@ -7,6 +7,7 @@ use App\Models\Certificado;
 use App\Models\Estudiante;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class CertificadoController extends Controller
 {
@@ -57,6 +58,8 @@ class CertificadoController extends Controller
             $certificado->updated_by=Auth::user()->id;
 
             $certificado->save();
+
+            QrCode::generate(env('APP_URL').'/certificados/'.$certificado->id.'.png', '../public/qrcodes/'.$certificado->id.'.svg');
         }
 
         return back()->with($resultado,$mensaje);

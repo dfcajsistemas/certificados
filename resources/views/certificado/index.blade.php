@@ -11,7 +11,6 @@
                     <h6 class="text-gray"><small>Fecha:</small> {{$capacitacion->desde}} @if ($capacitacion->hasta) al {{$capacitacion->hasta}} @endif</h6>
                     <h6 class="text-gray"><small>Estado:</small> {!! $capacitacion->estado==1?'<span class="badge badge-pill badge-success">Activo</span>':'<span class="badge badge-pill badge-secondary">Inactivo</span>' !!}</h6>
                 </div>
-                {!! QrCode::format('png')->generate('https://www.simplesoftware.io/#/docs/simple-qrcode/es', '../public/qrcodes/qrcode.png'); !!}
             </div>
             <div class="card card-outline card-navy">
                 <div class="card-body">
@@ -66,6 +65,16 @@
             noti(m);
         });
         window.livewire.on('delete', m=>{
+            noti(m);
+        });
+        window.livewire.on('smq', m=>{
+            $('#modalVer').modal('show');
+        });
+        window.livewire.on('smc', m=>{
+            $('#modalCer').modal('show');
+        });
+        window.livewire.on('cer', m=>{
+            $('#modalCer').modal('hide');
             noti(m);
         });
     });

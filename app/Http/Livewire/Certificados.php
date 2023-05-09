@@ -6,13 +6,16 @@ use Livewire\Component;
 use App\Models\Certificado;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Livewire\WithFileUploads;
 use Livewire\WithPagination;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class Certificados extends Component
 {
     use WithPagination;
+    use WithFileUploads;
 
-    public $cap, $buscar, $nombre, $emision, $nota, $metodo, $mtitulo, $idm;
+    public $cap, $buscar, $nombre, $emision, $nota, $metodo, $mtitulo, $idm, $cer;
     public $porPagina='10';
 
     protected $queryString=[
@@ -99,6 +102,48 @@ class Certificados extends Component
         $certificado->delete();
 
         $this->emit('delete', "Se eliminó el certificado");
+    }
+
+    public function qr(Certificado $certificado){
+        $this->mtitulo='QR Code';
+
+        //dd($certificado);
+
+        $this->resetCom();
+
+        $this->idm=$certificado->id;
+        $this->nombre=$certificado->estudiante->nombre;
+
+        $this->emit('smq', 'Mostrar modal');
+    }
+
+    public function vcer(Certificado $certificado){
+        $this->mtitulo='Certificado';
+        $this->metodo='gcer';
+
+        $this->resetCom();
+
+        $this->idm=$certificado->id;
+        $this->nombre=$certificado->estudiante->nombre;
+
+        $this->emit('smc', 'Mostrar modal');
+
+    }
+
+    public function gcer(){
+        $rules=[
+            'cer'=>'required|image|max:1024',
+        ];
+        $messages=[
+            'cer.required'=>'Elija un imagen',
+            'cer.image'=>'Solo se acepta imagenes',
+            'cer.max'=>'Solo imagenes de hasta 1Mb'
+        ];
+        $this->validate($rules, $messages);
+
+        $this->cer->store('certificados');
+
+        $this->emit('cer', "Se guardo el certificado");
     }
 
     public function resetCom(){

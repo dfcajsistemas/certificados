@@ -26,10 +26,11 @@
                 <table class="table table-hover table-sm">
                     <thead>
                         <tr>
-                            <th>#</th>
+                            <th>CÓDIGO</th>
                             <th>NOMBRE</th>
                             <th>EMISIÓN</th>
                             <th>NOTA</th>
+                            <th>CERTIFICADO</th>
                             <th>ESTADO</th>
                             <th>ACCIÓN</th>
                         </tr>
@@ -37,15 +38,16 @@
                     <tbody>
                         @foreach ($certificados as $certificado)
                             <tr>
-                                <td>{{ ($certificados->currentPage()-1)*$certificados->perPage() + $loop->index+1 }}</td>
+                                <td>{{ $certificado->id }}</td>
                                 <td>{{ $certificado->nombre }}</td>
                                 <td>{{ $certificado->emision }}</td>
                                 <td>{{ $certificado->nota }}</td>
+                                <td></td>
                                 <td>{!! $certificado->estado==1?'<span class="badge badge-pill badge-success">Activo</span>':'<span class="badge badge-pill badge-secondary">Inactivo</span>' !!}</td>
                                 <td>
                                     <div class="btn-group">
-                                        <button type="button" onclick="qr('{{$certificado->id}})" class="btn btn-outline-primary btn-xs" title="Ver QR"><i class="fa-solid fa-qrcode"></i></button>
-                                        <button type="button" onclick="certi('{{$certificado->id}})" class="btn btn-outline-primary btn-xs" title="Ver certificado"><i class="fa-solid fa-pager"></i></button>
+                                        <button type="button" wire:click='qr({{$certificado->id}})' class="btn btn-outline-primary btn-xs" title="Ver QR"><i class="fa-solid fa-qrcode"></i></button>
+                                        <button type="button" wire:click='vcer({{$certificado->id}})' class="btn btn-outline-primary btn-xs" title="Ver certificado"><i class="fa-solid fa-pager"></i></button>
                                         <button type="button" wire:click='edit({{$certificado->id}})' class="btn btn-outline-info btn-xs" title="Editar"><i class="fa-solid fa-pencil"></i></button>
                                         <button type="button" onclick="cestado('{{$certificado->nombre}}', {{$certificado->id}})" class="btn btn-outline-secondary btn-xs" title="Cambiar estado"><i class="fa-solid fa-toggle-off"></i></button>
                                         <button type="button" onclick="celiminar('{{$certificado->nombre}}', {{$certificado->id}})" class="btn btn-outline-danger btn-xs" title="Eliminar"><i class="fa-solid fa-trash-can"></i></button>
@@ -87,6 +89,44 @@
                         <span class="text-xs text-danger">{{$message}}</span>
                     @enderror
                 </div>
+            </div>
+        </div>
+    </x-modal>
+    <x-modal idModal='modalCer' :mtitulo="$mtitulo" :metodo="$metodo">
+        <div class="row">
+            <div class="col-sm-12 text-center mb-2">
+                <h5 class="text-success "><i class="fa-solid fa-user-graduate text-gray"></i> {{$nombre}}</h5>
+                @if ($cer)
+                <div class="">
+                    <img src="{{$cer->temporaryUrl()}}" class="img-fluid">
+                </div>
+                @endif
+            </div>
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <div class="input-group">
+                        <div class="custom-file">
+                            <input type="file" id="exampleInputFile" wire:model='cer' class="custom-file-input" placeholder="cer">
+                            <label class="custom-file-label" for="exampleInputFile">Elija un certificado</label>
+                            @error('cer')
+                                <span class="text-xs text-danger">{{$message}}</span>
+                            @enderror
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </x-modal>
+    <x-modal-show idModal='modalVer' :mtitulo="$mtitulo">
+        <div class="row">
+            <div class="col-sm-12">
+                <h5 class="text-success text-center"><i class="fa-solid fa-user-graduate text-gray"></i> {{$nombre}}</h5>
+            </div>
+            <div class="col-sm-12 text-center">
+                <img src="{{env('APP_URL').'/qrcodes/'.$idm.'.svg'}}" alt="{{$nombre}}" width="300" height="300">
+            </div>
+            <div class="col-sm-12 text-center mt-2">
+                <a href="{{env('APP_URL').'/qrcodes/'.$idm.'.svg'}}" download="{{$nombre.'-'.$idm}}" class="btn btn-info"><i class="fa-solid fa-download"></i> Descargar</a>
             </div>
         </div>
     </x-modal>
