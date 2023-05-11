@@ -67,9 +67,6 @@
         window.livewire.on('delete', m=>{
             noti(m);
         });
-        window.livewire.on('smq', m=>{
-            $('#modalVer').modal('show');
-        });
         window.livewire.on('smc', m=>{
             $('#modalCer').modal('show');
         });
@@ -114,7 +111,18 @@
             }
         })
     }
+    var p="{{env('APP_URL')}}";
+    function verCertificado(c, n){
+        document.getElementById('dVerCer').innerHTML='<div class="col-sm-12 text-center"><h5><i class="fa-solid fa-file-contract text-teal"></i> '+c+'  <i class="fa-solid fa-user-graduate text-teal"></i> '+n+'</h5></div><div class="col-sm-12 text-center"><img src="'+p+'/storage/certificados/'+c+'.png" class="img-fluid"></div><div class="col-sm-12 text-center mt-2"></div>';
 
+        $('#modalVerCer').modal('show');
+    }
+
+    function verQR(c, n){
+        document.getElementById('dVerQR').innerHTML='<div class="col-sm-12 mb-2"><h5 class="text-center"><i class="fa-solid fa-file-contract text-teal"></i> '+c+' <i class="fa-solid fa-user-graduate text-teal"></i> '+n+'</h5></div><div class="col-sm-12 text-center"><img src="'+p+'/qrcodes/'+c+'.svg" width="300" height="300"></div><div class="col-sm-12 text-center mt-4"><a href="'+p+'/qrcodes/'+c+'.svg" download="'+n+'-'+c+'" class="btn btn-info"><i class="fa-solid fa-download"></i> Descargar</a></div>';
+
+        $('#modalVer').modal('show');
+    }
 
     var path = "{{ route('capacitaciones.certificados.bsestudiante') }}";
 

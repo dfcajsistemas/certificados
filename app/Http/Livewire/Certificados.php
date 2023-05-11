@@ -99,22 +99,11 @@ class Certificados extends Component
     }
 
     public function destroy(Certificado $certificado){
+
+
         $certificado->delete();
 
         $this->emit('delete', "Se eliminó el certificado");
-    }
-
-    public function qr(Certificado $certificado){
-        $this->mtitulo='QR Code';
-
-        //dd($certificado);
-
-        $this->resetCom();
-
-        $this->idm=$certificado->id;
-        $this->nombre=$certificado->estudiante->nombre;
-
-        $this->emit('smq', 'Mostrar modal');
     }
 
     public function vcer(Certificado $certificado){
@@ -141,13 +130,13 @@ class Certificados extends Component
         ];
         $this->validate($rules, $messages);
 
-        $this->cer->store('certificados');
+        $this->cer->storeAs('public/certificados', $this->idm.'.'.$this->cer->extension());
 
         $this->emit('cer', "Se guardo el certificado");
     }
 
     public function resetCom(){
-        $this->reset(['emision', 'nota', 'buscar', 'idm', 'porPagina']);
+        $this->reset(['emision', 'nota', 'buscar', 'idm', 'porPagina', 'cer']);
         $this->resetValidation();
     }
 }

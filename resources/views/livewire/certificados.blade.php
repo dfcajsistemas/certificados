@@ -42,11 +42,17 @@
                                 <td>{{ $certificado->nombre }}</td>
                                 <td>{{ $certificado->emision }}</td>
                                 <td>{{ $certificado->nota }}</td>
-                                <td></td>
+                                <td>
+                                    @if (file_exists('storage/certificados/'.$certificado->id.'.png'))
+                                    <a href="javascript:void(0)" onclick="verCertificado({{$certificado->id}}, '{{$certificado->nombre}}')">
+                                        <img src="{{asset('storage/certificados/'.$certificado->id.'.png')}}" height="30">
+                                    </a>
+                                    @endif
+                                </td>
                                 <td>{!! $certificado->estado==1?'<span class="badge badge-pill badge-success">Activo</span>':'<span class="badge badge-pill badge-secondary">Inactivo</span>' !!}</td>
                                 <td>
                                     <div class="btn-group">
-                                        <button type="button" wire:click='qr({{$certificado->id}})' class="btn btn-outline-primary btn-xs" title="Ver QR"><i class="fa-solid fa-qrcode"></i></button>
+                                        <button type="button" onclick="verQR({{$certificado->id}}, '{{$certificado->nombre}}')" class="btn btn-outline-primary btn-xs" title="Ver QR"><i class="fa-solid fa-qrcode"></i></button>
                                         <button type="button" wire:click='vcer({{$certificado->id}})' class="btn btn-outline-primary btn-xs" title="Ver certificado"><i class="fa-solid fa-pager"></i></button>
                                         <button type="button" wire:click='edit({{$certificado->id}})' class="btn btn-outline-info btn-xs" title="Editar"><i class="fa-solid fa-pencil"></i></button>
                                         <button type="button" onclick="cestado('{{$certificado->nombre}}', {{$certificado->id}})" class="btn btn-outline-secondary btn-xs" title="Cambiar estado"><i class="fa-solid fa-toggle-off"></i></button>
@@ -104,31 +110,29 @@
             </div>
             <div class="col-sm-12">
                 <div class="form-group">
-                    <div class="input-group">
+
                         <div class="custom-file">
-                            <input type="file" id="exampleInputFile" wire:model='cer' class="custom-file-input" placeholder="cer">
-                            <label class="custom-file-label" for="exampleInputFile">Elija un certificado</label>
+                            <input type="file" id="InputFile" wire:model='cer' class="custom-file-input form-control" accept="image/x-png">
+                            <label for="InputFile" class="custom-file-label">@if ($cer){{$cer->getClientOriginalName()}}@endif</label>
                             @error('cer')
                                 <span class="text-xs text-danger">{{$message}}</span>
                             @enderror
                         </div>
-                    </div>
+
                 </div>
             </div>
         </div>
     </x-modal>
-    <x-modal-show idModal='modalVer' :mtitulo="$mtitulo">
-        <div class="row">
-            <div class="col-sm-12">
-                <h5 class="text-success text-center"><i class="fa-solid fa-user-graduate text-gray"></i> {{$nombre}}</h5>
-            </div>
-            <div class="col-sm-12 text-center">
-                <img src="{{env('APP_URL').'/qrcodes/'.$idm.'.svg'}}" alt="{{$nombre}}" width="300" height="300">
-            </div>
-            <div class="col-sm-12 text-center mt-2">
-                <a href="{{env('APP_URL').'/qrcodes/'.$idm.'.svg'}}" download="{{$nombre.'-'.$idm}}" class="btn btn-info"><i class="fa-solid fa-download"></i> Descargar</a>
-            </div>
+    <x-modal-show idModal='modalVer' mtitulo="Código QR">
+        <div class="row" id="dVerQR">
+
         </div>
     </x-modal>
+    <x-modal-show idModal='modalVerCer' mtitulo="Certificado" largo="modal-lg">
+        <div class="row" id="dVerCer">
+
+        </div>
+    </x-modal>
+
 </div>
 
