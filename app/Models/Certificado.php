@@ -14,6 +14,7 @@ class Certificado extends Model
         'nota',
         'estudiante_id',
         'capacitacion_id',
+        'estado',
         'created_by',
         'updated_by'
     ];

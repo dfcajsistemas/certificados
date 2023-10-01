@@ -68,7 +68,7 @@ class Estudiantes extends Component
         $this->validate($rules, $messages);
 
         $estudiante=Estudiante::create([
-            'nombre'=>$this->nombre,
+            'nombre'=>strtoupper($this->nombre),
             'dni'=>$this->dni,
             'telefono'=>$this->telefono,
             'correo'=>$this->correo,
@@ -113,7 +113,7 @@ class Estudiantes extends Component
 
         $estudiante=Estudiante::findOrFail($this->idm);
 
-        $estudiante->nombre=$this->nombre;
+        $estudiante->nombre=strtoupper($this->nombre);
         $estudiante->dni=$this->dni;
         $estudiante->telefono=$this->telefono;
         $estudiante->correo=$this->correo;

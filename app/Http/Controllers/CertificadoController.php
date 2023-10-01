@@ -50,6 +50,7 @@ class CertificadoController extends Controller
             $mensaje="El estudiante ya cuenta con certificado registrado.";
         }else{
             $certificado = new Certificado();
+            $certificado->estado=null;
             $certificado->emision=$request->emision;
             $certificado->nota=$request->nota;
             $certificado->estudiante_id=$request->estudiante_id;
@@ -59,7 +60,7 @@ class CertificadoController extends Controller
 
             $certificado->save();
 
-            QrCode::generate(env('APP_URL').'/certificados/'.$certificado->id.'.png', '../public/qrcodes/'.$certificado->id.'.svg');
+            QrCode::generate(route('rcertificado', $certificado->id), '../public/qrcodes/'.$certificado->id.'.svg');
         }
 
         return back()->with($resultado,$mensaje);

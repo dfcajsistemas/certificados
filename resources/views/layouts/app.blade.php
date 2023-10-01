@@ -39,6 +39,11 @@
                             <i class="fas fa-expand-arrows-alt"></i>
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{route('contrasena')}}" role="button" title="Cambiar contraseña">
+                            <i class="fa-solid fa-key"></i>
+                        </a>
+                    </li>
                     @auth
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('logout') }}" role="button" title="Salir" onclick="event.preventDefault();
@@ -119,7 +124,7 @@
                         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                             data-accordion="false">
                             <li class="nav-item">
-                                <a href="{{ route('capacitaciones') }}" class="nav-link {{request()->routeIs('capacitaciones.*') ? "active" : ""}}">
+                                <a href="{{ route('capacitaciones') }}" class="nav-link {{request()->routeIs('capacitaciones*') ? "active" : ""}}">
                                   <i class="nav-icon fa-solid fa-chalkboard-user"></i>
                                   <p>
                                     Capacitaciones
@@ -130,7 +135,7 @@
                         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                             data-accordion="false">
                             <li class="nav-item">
-                                <a href="{{ route('consultas') }}" class="nav-link {{request()->routeIs('consultas') ? "active" : ""}}">
+                                <a href="{{ route('consultas.restudiante') }}" class="nav-link {{request()->routeIs('consultas.*') ? "active" : ""}}">
                                   <i class="nav-icon fa-solid fa-table"></i>
                                   <p>
                                     Consultas

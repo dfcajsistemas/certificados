@@ -38,7 +38,7 @@ class Certificados extends Component
     {
         $certificados=DB::table('certificados')
                         ->join('estudiantes', 'certificados.estudiante_id', '=', 'estudiantes.id')
-                        ->select('estudiantes.nombre', 'certificados.emision', 'certificados.nota', 'certificados.estado', 'certificados.id')
+                        ->select('estudiantes.nombre', 'certificados.emision', 'certificados.nota', 'certificados.estado', 'certificados.id', 'certificados.file', 'certificados.estudiante_id', 'certificados.capacitacion_id')
                         ->where('certificados.capacitacion_id', $this->cap)
                         ->where('estudiantes.nombre', 'like', '%'.$this->buscar.'%')
                         ->orderBy('estudiantes.nombre')
@@ -84,18 +84,27 @@ class Certificados extends Component
     }
 
     public function estado(Certificado $certificado){
-        $est='activó';
+        $men='Se activó el certificado';
+        $te=true;
         if($certificado->estado){
             $certificado->estado=null;
-            $est='desactivó';
+            $men='Se desactivó el certificado';
         }else{
-            $certificado->estado=1;
+            if($certificado->file){
+                $certificado->estado=1;
+            }else{
+                $men="Agregue el certificado para activar";
+            }
         }
 
-        $certificado->updated_by=Auth::user()->id;
-        $certificado->save();
+        if($te){
+            $certificado->updated_by=Auth::user()->id;
+            $certificado->save();
 
-        $this->emit('status', "Se <b>$est</b> al usuario");
+            $this->emit('status_s', $men);
+        }else{
+            $this->emit('status_e', $men);
+        }
     }
 
     public function destroy(Certificado $certificado){
@@ -121,16 +130,25 @@ class Certificados extends Component
 
     public function gcer(){
         $rules=[
-            'cer'=>'required|image|max:1024',
+            'cer'=>'required|mimes:pdf|max:2048',
         ];
         $messages=[
-            'cer.required'=>'Elija un imagen',
-            'cer.image'=>'Solo se acepta imagenes',
-            'cer.max'=>'Solo imagenes de hasta 1Mb'
+            'cer.required'=>'Elija un certificado',
+            'cer.mimes'=>'Solo se acepta archivos pdf',
+            'cer.max'=>'Solo imagenes de hasta 2Mb'
         ];
         $this->validate($rules, $messages);
 
-        $this->cer->storeAs('public/certificados', $this->idm.'.'.$this->cer->extension());
+        $certi=Certificado::findOrFail($this->idm);
+
+        $nom_file=$certi->capacitacion_id.$certi->estudiante_id.'.'.$this->cer->extension();
+
+        $this->cer->storeAs('public/certificados', $nom_file);
+
+
+        $certi->file=$nom_file;
+        $certi->estado=1;
+        $certi->save();
 
         $this->emit('cer', "Se guardo el certificado");
     }

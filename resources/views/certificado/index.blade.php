@@ -61,8 +61,11 @@
             $('#modalRes').modal('hide');
             noti(m);
         });
-        window.livewire.on('status', m=>{
+        window.livewire.on('status_s', m=>{
             noti(m);
+        });
+        window.livewire.on('status_e', m=>{
+            noti(m, 'error');
         });
         window.livewire.on('delete', m=>{
             noti(m);
@@ -113,7 +116,7 @@
     }
     var p="{{env('APP_URL')}}";
     function verCertificado(c, n){
-        document.getElementById('dVerCer').innerHTML='<div class="col-sm-12 text-center"><h5><i class="fa-solid fa-file-contract text-teal"></i> '+c+'  <i class="fa-solid fa-user-graduate text-teal"></i> '+n+'</h5></div><div class="col-sm-12 text-center"><img src="'+p+'/storage/certificados/'+c+'.png" class="img-fluid"></div><div class="col-sm-12 text-center mt-2"></div>';
+        document.getElementById('dVerCer').innerHTML='<div class="col-sm-12 text-center"><h5><i class="fa-solid fa-file-contract text-teal"></i> '+c+'  <i class="fa-solid fa-user-graduate text-teal"></i> '+n+'</h5></div><div class="col-sm-12 text-center"><iframe src ="'+p+'/storage/certificados/'+c+'" width="100%" height="600px"></iframe></div>';
 
         $('#modalVerCer').modal('show');
     }

@@ -26,6 +26,7 @@
                 <table class="table table-hover table-sm">
                     <thead>
                         <tr>
+                            <th>ID</th>
                             <th>CÓDIGO</th>
                             <th>NOMBRE</th>
                             <th>EMISIÓN</th>
@@ -39,21 +40,24 @@
                         @foreach ($certificados as $certificado)
                             <tr>
                                 <td>{{ $certificado->id }}</td>
+                                <td>{{ $certificado->capacitacion_id.'-'.$certificado->estudiante_id}}</td>
                                 <td>{{ $certificado->nombre }}</td>
                                 <td>{{ $certificado->emision }}</td>
                                 <td>{{ $certificado->nota }}</td>
                                 <td>
-                                    @if (file_exists('storage/certificados/'.$certificado->id.'.png'))
-                                    <a href="javascript:void(0)" onclick="verCertificado({{$certificado->id}}, '{{$certificado->nombre}}')">
-                                        <img src="{{asset('storage/certificados/'.$certificado->id.'.png')}}" height="30">
+                                    @if ($certificado->file)
+                                    <a href="javascript:void(0)" onclick="verCertificado('{{$certificado->file}}', '{{$certificado->nombre}}')">
+                                        {{$certificado->file}}
                                     </a>
+                                    @else
+                                        {{$certificado->capacitacion_id.$certificado->estudiante_id.'.pdf'}}
                                     @endif
                                 </td>
                                 <td>{!! $certificado->estado==1?'<span class="badge badge-pill badge-success">Activo</span>':'<span class="badge badge-pill badge-secondary">Inactivo</span>' !!}</td>
                                 <td>
                                     <div class="btn-group">
                                         <button type="button" onclick="verQR({{$certificado->id}}, '{{$certificado->nombre}}')" class="btn btn-outline-primary btn-xs" title="Ver QR"><i class="fa-solid fa-qrcode"></i></button>
-                                        <button type="button" wire:click='vcer({{$certificado->id}})' class="btn btn-outline-primary btn-xs" title="Ver certificado"><i class="fa-solid fa-pager"></i></button>
+                                        <button type="button" wire:click='vcer({{$certificado->id}})' class="btn btn-outline-primary btn-xs" title="Subir certificado"><i class="fa-solid fa-upload"></i></button>
                                         <button type="button" wire:click='edit({{$certificado->id}})' class="btn btn-outline-info btn-xs" title="Editar"><i class="fa-solid fa-pencil"></i></button>
                                         <button type="button" onclick="cestado('{{$certificado->nombre}}', {{$certificado->id}})" class="btn btn-outline-secondary btn-xs" title="Cambiar estado"><i class="fa-solid fa-toggle-off"></i></button>
                                         <button type="button" onclick="celiminar('{{$certificado->nombre}}', {{$certificado->id}})" class="btn btn-outline-danger btn-xs" title="Eliminar"><i class="fa-solid fa-trash-can"></i></button>
@@ -102,17 +106,12 @@
         <div class="row">
             <div class="col-sm-12 text-center mb-2">
                 <h5 class="text-success "><i class="fa-solid fa-user-graduate text-gray"></i> {{$nombre}}</h5>
-                @if ($cer)
-                <div class="">
-                    <img src="{{$cer->temporaryUrl()}}" class="img-fluid">
-                </div>
-                @endif
             </div>
             <div class="col-sm-12">
                 <div class="form-group">
 
                         <div class="custom-file">
-                            <input type="file" id="InputFile" wire:model='cer' class="custom-file-input form-control" accept="image/x-png">
+                            <input type="file" id="InputFile" wire:model='cer' class="custom-file-input form-control" accept=".pdf">
                             <label for="InputFile" class="custom-file-label">@if ($cer){{$cer->getClientOriginalName()}}@endif</label>
                             @error('cer')
                                 <span class="text-xs text-danger">{{$message}}</span>
