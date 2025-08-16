@@ -13,6 +13,6 @@ class Consultas extends Component
     {
 
         return view('livewire.consultas')
-            ->layoutData(['page'=>'Consultas']);;
+            ->layoutData(['page'=>'Consultas']);
     }
 }

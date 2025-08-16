@@ -5,22 +5,24 @@
                 <h3 class="card-title text-muted"><i class="fa-solid fa-angle-right text-orange"></i> Accesos</h3>
             </div>
             <div class="card-body">
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <select wire:model="porPagina" class="form-control rounded-0 mr-2">
+                <div class="row mb-3">
+                    <div class="col-md-1">
+                        <select wire:model="porPagina" class="form-control mr-2">
                             <option value="10">10</option>
                             <option value="20">20</option>
                             <option value="50">50</option>
                             <option value="100">100</option>
                         </select>
                     </div>
-                    <input wire:model.defer="buscar" wire:keydown.enter='render' type="text" class="form-control" placeholder="Buscar">
-                    <div class="input-group-append">
+                    <div class="col-md-9">
+                        <input wire:model.defer="buscar" wire:keydown.enter='render' type="text" class="form-control" placeholder="Buscar">
+                    </div>
+                    <div class="col-md-2">
                         @if ($buscar!='')
-                            <button wire:click="$set('buscar','')" class="btn btn-secondary btn-flat" title="Limpiar filtros"><i class="fa-solid fa-eraser"></i></button>
+                            <button wire:click="$set('buscar','')" class="btn btn-secondary mr-1" title="Limpiar filtros"><i class="fa-solid fa-eraser"></i></button>
                         @endif
-                        <button type="button" wire:click='render()' class="btn btn-info btn-flat" title="Buscar"><i class="fa-solid fa-magnifying-glass"></i></button>
-                            <button type="button" wire:click='create()' class="btn btn-primary btn-flat" title="Nuevo usuario"><i class="fa-solid fa-plus"></i></button>
+                        <button type="button" wire:click='render()' class="btn btn-info" title="Buscar"><i class="fa-solid fa-magnifying-glass"></i></button>
+                        <button type="button" wire:click='create()' class="btn btn-primary" title="Nuevo usuario"><i class="fa-solid fa-plus"></i></button>
                     </div>
                 </div>
                 @if ($users->count())
@@ -30,6 +32,7 @@
                                 <tr>
                                     <th>#</th>
                                     <th>NOMBRE</th>
+                                    <th>N° FOTOCHECK</th>
                                     <th>CORREO</th>
                                     <th>ROL</th>
                                     <th>ESTADO</th>
@@ -41,16 +44,14 @@
                                     <tr>
                                         <td>{{ ($users->currentPage()-1)*$users->perPage() + $loop->index+1 }}</td>
                                         <td>{{ $user->name }}</td>
+                                        <td>{{ $user->nfotocheck }}</td>
                                         <td>{{ $user->email }}</td>
                                         <td>{!! $user->rol==1?'<span class="text-primary">Admin</span>':'<span class="text-success">Común</span>' !!}</td>
                                         <td>{!! $user->estado==1?'<span class="badge badge-pill badge-success">Activo</span>':'<span class="badge badge-pill badge-secondary">Inactivo</span>' !!}</td>
                                         <td>
-                                            <div class="btn-group">
                                                 <button type="button" wire:click='edit({{$user->id}})' class="btn btn-outline-info btn-xs" title="Editar"><i class="fa-solid fa-pencil"></i></button>
                                                 <button type="button" onclick="confirmar('{{$user->name}}', {{$user->id}})" class="btn btn-outline-secondary btn-xs" title="Cambiar estado"><i class="fa-solid fa-toggle-off"></i></button>
                                                 <button type="button" onclick="cpassword('{{$user->name}}', {{$user->id}})" class="btn btn-outline-primary btn-xs" title="Cambiar contraseña"><i class="fa-solid fa-key"></i></button>
-
-                                            </div>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -73,6 +74,13 @@
                     <label for="name">Nombre</label>
                     <input type="text" id="name" wire:model.defer='name' class="form-control" placeholder="Nombre">
                     @error('name')
+                        <span class="text-xs text-danger">{{$message}}</span>
+                    @enderror
+                </div>
+                <div class="form-group">
+                    <label for="nfotocheck">N° Fotocheck</label>
+                    <input type="text" id="nfotocheck" wire:model.defer='nfotocheck' class="form-control" placeholder="N° Fotocheck">
+                    @error('nfotocheck')
                         <span class="text-xs text-danger">{{$message}}</span>
                     @enderror
                 </div>

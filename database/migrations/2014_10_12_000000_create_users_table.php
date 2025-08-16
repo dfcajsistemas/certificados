@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('nfotocheck')->unique()->nullable();
             $table->string('email')->unique();
             $table->tinyInteger('rol')->nullable(); //1 admin, null normal
             $table->tinyInteger('estado')->nullable()->default(1); //1 activo, null inactivo

@@ -15,7 +15,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Certificados'),
+    'name' => env('APP_NAME', 'ControlDoc'),
 
     /*
     |--------------------------------------------------------------------------

@@ -1,9 +1,9 @@
 <x-guest-layout>
     <div class="login-box">
         <!-- /.login-logo -->
-        <div class="card card-outline card-primary">
+        <div class="card card-outline card-navy">
           <div class="card-header text-center">
-            <a href="/" class="h1"><b>Certificados</b></a>
+            <a href="/" class="h1"><b>ControlDoc</b></a>
           </div>
           <div class="card-body">
             <p class="login-box-msg">Inicia sessión</p>

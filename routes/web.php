@@ -1,18 +1,18 @@
 <?php
 
-use App\Http\Controllers\CertificadoController;
-use App\Http\Controllers\ConsultasController;
+use App\Http\Controllers\DisciplinaController;
+use App\Http\Controllers\DocumentoController;
+use App\Http\Controllers\ProyectoController;
 use App\Http\Livewire\Accesos;
-use App\Http\Livewire\Admin;
-use App\Http\Livewire\Capacitaciones;
 use App\Http\Livewire\Consultas;
 use App\Http\Livewire\Contrasena;
 use App\Http\Livewire\Dashboard;
-use App\Http\Livewire\Estudiantes;
-use App\Http\Livewire\Inicio;
-use App\Models\Certificado;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\FrontController;
+use App\Http\Livewire\Disciplinas;
+use App\Http\Livewire\Documentos;
+use App\Http\Livewire\Empresas;
+use App\Http\Livewire\Proyectos;
+use App\Http\Livewire\Revisiones;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,11 +25,15 @@ use App\Http\Controllers\FrontController;
 |
 */
 
-Route::get('/', [FrontController::class, 'index']);
-Route::get('/certificado', [FrontController::class, 'certificado'])->name('certificado');
-Route::get('/documento', [FrontController::class, 'documento'])->name('documento');
-Route::get('/restudiante/{estudiante}', [FrontController::class, 'restudiante'])->name('restudiante');
-Route::get('/rcertificado/{certificado}', [FrontController::class, 'rcertificado'])->name('rcertificado');
+Route::get('/', function(){
+    return view("welcome");
+});
+
+Route::get('storage-link', function(){
+    $targetFolder=storage_path('app/public');
+    $linkFolder=$_SERVER['DOCUMENT_ROOT'].'/storage';
+    symlink($targetFolder,$linkFolder);
+});
 
 Route::middleware([
     'auth:sanctum',
@@ -39,11 +43,19 @@ Route::middleware([
     route::get('/contrasena', Contrasena::class)->name('contrasena');
     Route::get('/dashboard', Dashboard::class)->name('dashboard');
     Route::get('/accesos', Accesos::class)->name('accesos')->middleware('admin');
-    Route::get('/estudiantes', Estudiantes::class)->name('estudiantes');
-    Route::get('/capacitaciones', Capacitaciones::class)->name('capacitaciones');
-    Route::get('/capacitaciones/{capacitacion}', [CertificadoController::class, 'certificados'])->name('capacitaciones.certificados');
-    Route::get('/capacitaciones/certificados/bsestudiante', [CertificadoController::class, 'bsestudiante'])->name('capacitaciones.certificados.bsestudiante');
-    Route::post('/capacitaciones/certificados/store', [CertificadoController::class, 'store'])->name('capacitaciones.certificados.store');
-    Route::get('/consultas/restudiante', [ConsultasController::class, 'restudiante'])->name('consultas.restudiante');
-    Route::get('/consultas/bsestudiante', [ConsultasController::class, 'bsestudiante'])->name('consultas.bsestudiante');
+    Route::get('/disciplinas', Disciplinas::class)->name('disciplinas')->middleware('admin');
+    Route::get('/disciplinas/busers', [DisciplinaController::class, 'busers'])->name('disciplinas.busers')->middleware('admin');
+    Route::get('/disciplinas/{disciplina}', [DisciplinaController::class, 'index'])->name('disciplinas.users')->middleware('admin');
+    Route::post('/disciplinas/{disciplina}/users', [DisciplinaController::class, 'store'])->name('disciplinas.users.store')->middleware('admin');
+    Route::get('/proyectos', Proyectos::class)->name('proyectos')->middleware('admin');
+    Route::get('/proyectos/bempresa', [ProyectoController::class, 'bempresas'])->name('proyectos.bempresas')->middleware('admin');
+    Route::get('/proyectos/{proyecto}', [ProyectoController::class, 'index'])->name('proyectos.empresas')->middleware('admin');
+    Route::post('/proyectos/{proyecto}/empresas', [ProyectoController::class, 'store'])->name('proyectos.empresas.store')->middleware('admin');
+    Route::get('/empresas', Empresas::class)->name('empresas')->middleware('admin');
+    Route::get('/documentos', Documentos::class)->name('documentos')->middleware('admin');
+    Route::resource('/documentos', DocumentoController::class)->except(['index', 'show', 'destroy'])->names('documentos')->middleware('admin');
+    Route::get('/documentos/bempresas/{proyecto}', [DocumentoController::class, 'bempresas'])->name('documentos.bempresas')->middleware('admin');
+    
+    Route::get('/revisiones', Revisiones::class)->name('revisiones');
+    Route::get('/consultas', Consultas::class)->name('consultas');
 });

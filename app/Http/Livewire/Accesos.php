@@ -12,7 +12,7 @@ class Accesos extends Component
 {
     use WithPagination;
 
-    public $buscar, $name, $email, $rol, $metodo, $mtitulo, $idm;
+    public $buscar, $name, $email, $rol, $metodo, $mtitulo, $nfotocheck, $idm;
     public $porPagina='10';
 
     protected $queryString=[
@@ -33,7 +33,7 @@ class Accesos extends Component
 
     public function render()
     {
-        $users=User::where('name', 'like', '%'.$this->buscar.'%')->orderBy('name')->paginate($this->porPagina);
+        $users=User::where('name', 'like', '%'.$this->buscar.'%')->orWhere('nfotocheck', 'like', '%'.$this->buscar.'%')->orderBy('name')->paginate($this->porPagina);
         return view('livewire.accesos', compact('users'))
             ->layoutData(['page'=>'Accesos']);
     }
@@ -49,11 +49,14 @@ class Accesos extends Component
     public function store(){
         $rules=[
             'name'=>'required|min:3',
+            'nfotocheck'=>'required|unique:users,nfotocheck',
             'email'=>'required|unique:users,email|email',
         ];
         $messages=[
             'name.required'=>'Ingrese un nombre',
             'name.min'=>'Mínimo 3 caracteres',
+            'nfotocheck.required'=>'Ingrese un número de fotocheck',
+            'nfotocheck.unique'=>'El número de fotocheck ya existe',
             'email.required'=>'Ingrese un correo',
             'email.unique'=>'El correo ya existe',
             'email.email'=>'Ingrese un correo válido'
@@ -64,6 +67,7 @@ class Accesos extends Component
         $password=Str::random(8);
         $user=User::create([
             'name'=>$this->name,
+            'nfotocheck'=>$this->nfotocheck,
             'email'=>$this->email,
             'rol'=>($this->rol == 1 ? 1 : null),
             'password'=>bcrypt($password),
@@ -82,6 +86,7 @@ class Accesos extends Component
 
         $this->idm=$user->id;
         $this->name=$user->name;
+        $this->nfotocheck=$user->nfotocheck;
         $this->email=$user->email;
         $this->rol=$user->rol;
 
@@ -91,11 +96,14 @@ class Accesos extends Component
     public function update(){
         $rules=[
             'name'=>'required|min:3',
+            'nfotocheck'=>"required|unique:users,nfotocheck, {$this->idm}",
             'email'=>"required|email|unique:users,email,{$this->idm}",
         ];
         $messages=[
             'name.required'=>'Ingrese un nombre',
             'name.min'=>'Mínimo 3 caracteres',
+            'nfotocheck.required'=>'Ingrese un número de fotocheck',
+            'nfotocheck.unique'=>'El número de fotocheck ya existe',
             'email.required'=>'Ingrese un correo',
             'email.unique'=>'El correo ya existe',
             'email.email'=>'Ingrese un correo válido'
@@ -106,6 +114,7 @@ class Accesos extends Component
         $user=User::findOrFail($this->idm);
 
         $user->name=$this->name;
+        $user->nfotocheck=$this->nfotocheck;
         $user->email=$this->email;
         $user->rol=$this->rol==1 ? 1 : null;
         $user->updated_by=Auth::user()->id;
@@ -143,7 +152,7 @@ class Accesos extends Component
     }
 
     public function resetCom(){
-        $this->reset(['name', 'email', 'rol', 'buscar', 'idm', 'porPagina']);
+        $this->reset(['name', 'email', 'rol', 'buscar', 'idm', 'porPagina', 'nfotocheck']);
         $this->resetValidation();
     }
 }

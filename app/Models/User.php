@@ -25,6 +25,7 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'nfotocheck',
         'email',
         'password',
         'rol'
@@ -60,7 +61,14 @@ class User extends Authenticatable
         'profile_photo_url',
     ];
 
-    public function votos(){
-        return $this->hasMany(Voto::class);
+    //relaciones uno a muchos
+    public function revisions(){
+        return $this->hasMany(Revision::class);
     }
+
+    //relaciones muchos a muchos
+    public function disciplinas(){
+        return $this->belongsToMany(Disciplina::class);
+    }
+
 }

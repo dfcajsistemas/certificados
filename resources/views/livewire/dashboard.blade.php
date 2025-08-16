@@ -1,6 +1,5 @@
 <div>
     <div class="row">
-
         <div class="col-sm-6">
             <div class="row">
                 <div class="col-sm-6">
@@ -24,12 +23,12 @@
                     <div class="inner">
                     <h3>{{$nest}}</h3>
 
-                    <p>Estudiantes</p>
+                    <p>Documentos</p>
                     </div>
                     <div class="icon">
-                    <i class="fa-solid fa-user-graduate"></i>
+                        <i class="fa-solid fa-file-lines"></i>
                     </div>
-                    <a href="{{route('estudiantes')}}" class="small-box-footer">Más info <i class="fas fa-arrow-circle-right"></i></a>
+                    <a href="{{route('documentos')}}" class="small-box-footer">Más info <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
                 </div>
                 <!-- ./col -->
@@ -39,12 +38,12 @@
                     <div class="inner">
                     <h3>{{$ncap}}</h3>
 
-                    <p>Capacitaciones</p>
+                    <p>Proyectos</p>
                     </div>
                     <div class="icon">
-                        <i class="fa-solid fa-chalkboard-user"></i>
+                        <i class="fa-solid fa-person-digging"></i>
                     </div>
-                    <a href="{{route('capacitaciones')}}" class="small-box-footer">Más info <i class="fas fa-arrow-circle-right"></i></a>
+                    <a href="{{route('proyectos')}}" class="small-box-footer">Más info <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
                 </div>
                 <!-- ./col -->
@@ -54,12 +53,12 @@
                     <div class="inner">
                     <h3>{{$ncer}}</h3>
 
-                    <p>Certificados</p>
+                    <p>Empresas</p>
                     </div>
                     <div class="icon">
-                        <i class="fa-solid fa-file-contract"></i>
+                        <i class="fa-solid fa-building"></i>
                     </div>
-                    <a href="{{route('capacitaciones')}}" class="small-box-footer">Más info <i class="fas fa-arrow-circle-right"></i></a>
+                    <a href="{{route('empresas')}}" class="small-box-footer">Más info <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
                 </div>
                 <!-- ./col -->

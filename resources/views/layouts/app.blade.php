@@ -63,9 +63,9 @@
             <aside class="main-sidebar elevation-4 sidebar-light-primary">
                 <!-- Brand Logo -->
                 <a href="{{ route('dashboard') }}" class="brand-link bg-navy">
-                    <img src="{{ asset('dist/img/logo.png') }}" alt="Quipu Logo" class="brand-image img-circle elevation-3"
+                    <img src="{{ asset('dist/img/logo.png') }}" alt="ControlDoc Logo" class="brand-image img-circle elevation-3"
                         style="opacity: .8">
-                    <span class="brand-text font-weight-light">Certificados</span>
+                    <span class="brand-text font-weight-light">ControlDoc</span>
                 </a>
 
                 <!-- Sidebar -->
@@ -109,14 +109,58 @@
                                 </a>
                             </li>
                         </ul>
+                        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+                            data-accordion="false">
+                            <li class="nav-item">
+                                <a href="{{ route('disciplinas') }}" class="nav-link {{request()->routeIs('disciplinas') ? "active" : ""}}">
+                                  <i class="nav-icon fa-solid fa-tag"></i>
+                                  <p>
+                                    Disciplinas
+                                  </p>
+                                </a>
+                            </li>
+                        </ul>
+                        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+                            data-accordion="false">
+                            <li class="nav-item">
+                                <a href="{{ route('proyectos') }}" class="nav-link {{request()->routeIs('proyectos') ? "active" : ""}}">
+                                  <i class="nav-icon fa-solid fa-person-digging"></i>
+                                  <p>
+                                    Proyectos
+                                  </p>
+                                </a>
+                            </li>
+                        </ul>
+                        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+                            data-accordion="false">
+                            <li class="nav-item">
+                                <a href="{{ route('empresas') }}" class="nav-link {{request()->routeIs('empresas') ? "active" : ""}}">
+                                  <i class="nav-icon fa-solid fa-building"></i>
+                                  <p>
+                                    Empresas
+                                  </p>
+                                </a>
+                            </li>
+                        </ul>
+                        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+                            data-accordion="false">
+                            <li class="nav-item">
+                                <a href="{{ route('documentos') }}" class="nav-link {{request()->routeIs('documentos') ? "active" : ""}}">
+                                  <i class="nav-icon fa-solid fa-file-lines"></i>
+                                  <p>
+                                    Documentos
+                                  </p>
+                                </a>
+                            </li>
+                        </ul>
                         @endif
                         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                             data-accordion="false">
                             <li class="nav-item">
-                                <a href="{{ route('estudiantes') }}" class="nav-link {{request()->routeIs('estudiantes') ? "active" : ""}}">
-                                  <i class="nav-icon fa-solid fa-user-group"></i>
+                                <a href="{{ route('revisiones') }}" class="nav-link {{request()->routeIs('revisiones') ? "active" : ""}}">
+                                  <i class="nav-icon fa-solid fa-file-circle-check"></i>
                                   <p>
-                                    Estudiantes
+                                    Revisiones
                                   </p>
                                 </a>
                             </li>
@@ -124,25 +168,15 @@
                         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                             data-accordion="false">
                             <li class="nav-item">
-                                <a href="{{ route('capacitaciones') }}" class="nav-link {{request()->routeIs('capacitaciones*') ? "active" : ""}}">
-                                  <i class="nav-icon fa-solid fa-chalkboard-user"></i>
-                                  <p>
-                                    Capacitaciones
-                                  </p>
-                                </a>
-                            </li>
-                        </ul>
-                        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
-                            data-accordion="false">
-                            <li class="nav-item">
-                                <a href="{{ route('consultas.restudiante') }}" class="nav-link {{request()->routeIs('consultas.*') ? "active" : ""}}">
-                                  <i class="nav-icon fa-solid fa-table"></i>
+                                <a href="{{ route('consultas') }}" class="nav-link {{request()->routeIs('consultas') ? "active" : ""}}">
+                                  <i class="nav-icon fa-solid fa-magnifying-glass"></i>
                                   <p>
                                     Consultas
                                   </p>
                                 </a>
                             </li>
                         </ul>
+
                     </nav>
                     <!-- /.sidebar-menu -->
                 </div>
@@ -169,7 +203,7 @@
                     {{date("Y")}}
                 </div>
                 <!-- Default to the left -->
-                <strong>Informática</strong> BIARI
+                <strong>GIO</strong> ControlDocumentario
             </footer>
         </div>
         <!-- ./wrapper -->

@@ -31,10 +31,10 @@
         <!-- Automatic element centering -->
         <div class="lockscreen-wrapper">
             <div class="lockscreen-logo">
-                <a href="/" style="color: red;"><b>Validar</b>Certificado</a>
+                <a href="/" style="color: red;"><b>Control</b>Documentario</a>
             </div>
             <!-- User name -->
-            <div class="lockscreen-name text-xl" style="color: #162C4F;">BIARI</div>
+            <div class="lockscreen-name text-xl" style="color: #162C4F;">ControlDoc</div>
 
             <!-- /.lockscreen-item -->
             <div class="help-block text-center text-lg text-primary">
@@ -44,7 +44,7 @@
                 @if (Route::has('login'))
                 <div class="my-4">
                     @auth
-                        <a href="{{ url('/dashboard') }}" class="btn btn-outline-success"><i class="fa-solid fa-person-walking"></i> Ir a la administración</a>
+                        <a href="{{ url('/dashboard') }}" class="btn btn-outline-success"><i class="fa-solid fa-person-walking"></i> Administrar</a>
                     @else
                         <a href="{{ route('login') }}" class="btn btn-outline-primary"><i class="fa-solid fa-right-to-bracket"></i> Iniciar sesión</a>
 
